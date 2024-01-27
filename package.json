@@ -1,0 +1,44 @@
+{
+  "name": "fetch-llvm",
+  "description": "Github Action to fetch LLVM for the Nativity compiler",
+  "version": "0.1.0",
+  "author": "David Gonzalez <davidgm94.work@protonmail.com>",
+  "bugs": {
+    "url": "https://github.com/birth-software/fetch-llvm/issues"
+  },
+  "dependencies": {
+    "@actions/cache": "^3.2.1",
+    "@actions/core": "^1.10.1",
+    "@actions/tool-cache": "^2.0.1",
+    "semver": "^7.1.3",
+    "simple-get": "^4.0.0"
+  },
+  "devDependencies": {
+    "esbuild": "^0.19.0",
+    "standard": "^17.1.0"
+  },
+  "homepage": "https://github.com/birth-software/fetch-llvm",
+  "keywords": [
+    "Actions",
+    "Github",
+    "nat",
+    "Nativity",
+    "LLVM"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/birth-software/fetch-llvm.git"
+  },
+  "scripts": {
+    "prepare": "esbuild index.js --outdir=dist --keep-names --bundle --platform=node --target=node20",
+    "test": "standard && node test",
+    "standard": "standard --fix"
+  },
+  "standard": {
+    "ignore": [
+      "dist/**/*.js"
+    ]
+  }
+}

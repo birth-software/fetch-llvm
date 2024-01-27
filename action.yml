@@ -1,0 +1,25 @@
+name: 'Fetch LLVM'
+description: 'This action fetches LLVM for the Nativity compiler'
+branding:
+  icon: play
+  color: orange
+  author: 'birth-sofware'
+inputs:
+  version:
+    description: 'Version of LLVM to fetch (only 17.0.6 is supported)'
+    required: false
+    default: '17.0.6'
+  cache:
+    description: 'Cache downloaded LLVM for faster action runs. Strongly recommended'
+    required: false
+    default: 'true'
+  cpu:
+    description: 'Target CPU model for LLVM'
+    required: true
+    default: 'baseline'
+outputs:
+  MY_LLVM_PATH:
+    description: 'LLVM path'
+runs:
+  using: 'node20'
+  main: 'index.js'

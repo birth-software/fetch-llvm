@@ -1,0 +1,30 @@
+name: CI
+on: pull_request
+jobs:
+  test:
+    name: Unit tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v4
+      - name: Install dependencies
+        run: npm install
+      - name: Run tests
+        run: npm test
+
+  linux:
+    name: Build test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v4
+      - name: Fetch LLVM
+        id: fetch-llvm
+        uses: birth-software/fetch-llvm@first
+        with:
+          version: '17.0.6'
+          cpu: 'x86_64_v3'
+      - name: Run tests (zig up to v0.10.x)
+        env:
+          MY_LLVM_PATH: ${{ steps.fetch-llvm.outputs.MY_LLVM_PATH }}
+        run: ls $GITHUBMY_LLVM_PATH/bin

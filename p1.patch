@@ -1,0 +1,65 @@
+diff --git a/.github/workflows/ci.yml b/.github/workflows/ci.yml
+index d0ff965..b6b6991 100644
+--- a/.github/workflows/ci.yml
++++ b/.github/workflows/ci.yml
+@@ -1,20 +1,25 @@
+ name: CI
+ on: pull_request
+ jobs:
+-  test:
+-    name: Unit tests
++  linux:
++    name: Build
+     runs-on: ubuntu-latest
+     steps:
+       - name: Checkout sources
+         uses: actions/checkout@v4
+-      - name: Install dependencies
+-        run: npm install
+-      - name: Run tests
+-        run: npm test
+-
+-  linux:
+-    name: Build test
+-    runs-on: ubuntu-latest
++      - name: Fetch LLVM
++        id: fetch-llvm
++        uses: birth-software/fetch-llvm@first
++        with:
++          version: '17.0.6'
++          cpu: 'x86_64_v3'
++      - name: Test it exists
++        env:
++          MY_LLVM_PATH: ${{ steps.fetch-llvm.outputs.MY_LLVM_PATH }}
++        run: ls $GITHUBMY_LLVM_PATH/bin
++  windows:
++    name: Build
++    runs-on: windows-latest
+     steps:
+       - name: Checkout sources
+         uses: actions/checkout@v4
+@@ -24,7 +29,23 @@ jobs:
+         with:
+           version: '17.0.6'
+           cpu: 'x86_64_v3'
+-      - name: Run tests (zig up to v0.10.x)
++      - name: Test it exists
++        env:
++          MY_LLVM_PATH: ${{ steps.fetch-llvm.outputs.MY_LLVM_PATH }}
++        run: ls $GITHUBMY_LLVM_PATH/bin
++  macos:
++    name: Build
++    runs-on: flyci-macos-large-latest-m1
++    steps:
++      - name: Checkout sources
++        uses: actions/checkout@v4
++      - name: Fetch LLVM
++        id: fetch-llvm
++        uses: birth-software/fetch-llvm@first
++        with:
++          version: '17.0.6'
++          cpu: 'apple_m1'
++      - name: Test it exists
+         env:
+           MY_LLVM_PATH: ${{ steps.fetch-llvm.outputs.MY_LLVM_PATH }}
+         run: ls $GITHUBMY_LLVM_PATH/bin

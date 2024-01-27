@@ -11,8 +11,18 @@ async function main () {
   const useCache = actions.getInput('cache') || 'true'
   const cpu = actions.getInput('cpu') || 'baseline'
 
-  const operatingSystem = os.platform()
-  const architecture = os.arch()
+  const osTag = os.platform()
+  const operatingSystem = {
+      linux: 'linux',
+      darwin: 'macos',
+      win32: 'windows'
+  } [osTag]
+
+  const architecture = {
+      arm: 'arm',
+      arm64: 'aarch64',
+      x64: 'x86_64'
+  } [os.arch()]
 
   const abi = {
     linux: 'musl',
